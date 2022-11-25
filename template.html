@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>8班随机抽人工具</title>
+	<style>
+		img.x{
+			position: absolute;
+			height: auto;
+			background: no-repeat;
+			top: auto;
+			align: center;
+			z-index: -1;
+		 }
+		button{
+			opacity: 0.81;
+			height: 45px;
+			width: 103px;
+			margin: 5px;
+			background:#FFFAF0;
+			border-width:1px;
+			font-size: 24px;
+		}
+		span{
+			opacity: 0.81;
+			height: 200px;
+			width: 200px;
+			background: bisque;
+			margin: 5px;
+			font-size: 30px;
+		}
+
+		.D1{
+			opacity: 0.81;
+			height: 400px;
+			width: 1500px;
+			background: #fff;
+		}
+		.B{
+			opacity: 0.81;
+			height: 47px;
+			width: 98px;
+			margin: 5px;
+			border-radius: 5px;
+		}
+		.Dm{
+			opacity: 0.81;
+			height: 89px;
+			width: 400px;
+			font-size: 78px;
+			background: #fff;
+			border-radius: 10px;
+		}
+	</style>
+</head>
+
+<div><img class="x" src="https://img-blog.csdnimg.cn/a83b41b5a3aa4547819bd345d8e4444a.jpeg#pic_center"></div>
+
+<body onload="A()">
+<div align="center">
+	<div id="D1" class="D1" align="center" >
+		<input type="button" value="开始" class="B" onclick="begin()"><br>
+		<input type="button" value="结束" class="B" onclick="end()" ><br>
+	</div>
+	<div class="Dm">
+		<p id="P2"></p>
+	</div>
+</div>
+
+<script>
+	let name;
+	let repeat = -1;
+	let f;
+	let k=0;
+	let F=true;
+	let names=[
+/////////////////////////////////////// Ed
+];
+
+	//生成当前名单
+	function A(){
+		for(let i=0;i<names.length;i++){
+			if(names[i].length>1){
+				let x=document.createElement("button");
+				x.id=k+'';
+				let t=document.createTextNode(names[i]);
+				x.appendChild(t);
+				document.getElementById("D1").appendChild(x);
+				if((i+1)%12==0&i!=0){
+					let x=document.createElement("br");
+					document.getElementById("D1").appendChild(x);
+				}
+				k++;
+			}else{
+				let x=document.createElement("button");
+				let t=document.createTextNode(names[i]);
+				x.appendChild(t);
+				document.getElementById("D1").appendChild(x);
+				if((i+1)%12==0&i!=0){
+					let x=document.createElement("br");
+					document.getElementById("D1").appendChild(x);
+				}
+			}
+		}
+	}
+	function change(){
+		let ID=Math.floor(Math.random()*(k + 5) );
+		if(ID == repeat)++ID;
+		repeat = ID;
+
+//cheat : lxy, jqz,csh, zpl,zqr
+		if(ID == 23 || ID == 13 || ID == 33 || ID == 18 || ID == 21 || ID > 41){
+				let tmp = Math.floor(Math.random()*13);
+				if(tmp == 0 )ID = 7;
+				if(tmp == 1)ID = 10;
+				if(tmp == 2)ID = 25;
+				if(tmp == 3)ID = 27;
+				if(tmp == 4)ID = 28;
+				if(tmp == 9)ID = 35;
+		}
+
+		name=document.getElementById(ID+'').innerHTML;
+		for(let i=0;i<k;i++){
+			if(ID!=i){
+				document.getElementById(i+'').style.cssText="background:#FFFAF0";
+			}	
+			document.getElementById(ID+'').style.cssText="background:#f00";
+		}
+	}
+	function begin(){
+		document.getElementById("P2").style.cssText="background: #ffd30b"
+		document.getElementById("P2").innerHTML="";
+		if(F){
+			f=setInterval(change,33);//50
+			F=false;
+		}
+	}
+	function end(){
+		F=true;
+		document.getElementById("P2").style.cssText="background: #ffd30b"
+		document.getElementById("P2").innerHTML=name;
+		clearInterval(f);
+	}
+	function debug(){
+		alert("Access Denied!\n [0x7f, 0x3f, 0xff]"); 
+	 }
+
+	function download(){
+		let url='https://img-blog.csdnimg.cn/a83b41b5a3aa4547819bd345d8e4444a.jpeg';
+		//window.open(url);
+ 
+		downloadUrlFile(url, '点名器背景图0x7ff.jpeg');
+   	 }
+ 
+    	// 下载含有url的文件
+    	function downloadUrlFile(url, fileName) {
+		const url2 = url.replace(/\\/g, '/');
+		const xhr = new XMLHttpRequest();
+		xhr.open('GET', url2, true);
+		xhr.responseType = 'blob';
+		//xhr.setRequestHeader('Authorization', 'Basic a2VybWl0Omtlcm1pdA==');
+		// 为了避免大文件影响用户体验，建议加loading
+		xhr.onload = () => {
+ 			if (xhr.status === 200) {
+				// 获取文件blob数据并保存
+				saveAs(xhr.response, fileName);
+			}
+		};
+		xhr.send();
+    	}
+ 
+	function saveAs(data, name) {
+		const urlObject = window.URL || window.webkitURL || window;
+		const export_blob = new Blob([data]);
+		//createElementNS() 方法可创建带有指定命名空间的元素节点。
+		//此方法可返回一个 Element 对象。
+		const save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+		save_link.href = urlObject.createObjectURL(export_blob);
+		save_link.download = name;
+		save_link.click();
+	}
+
+	
+</script>
+
+<input type="button" onclick="download()" value="下载背景图" class="B">
+
+<font color = "red" size = "5">
+	<br>8班随机抽人工具改进版v2:</br>
+	<br>1.修正了连续两次闪动抽中同一个人的情况;</br>
+	<br>2.更正了某些同学渐进概率不均等的问题;</br>
+	<br>3.修改了转义字符不支持问题;</br>
+	<br>4.焊入锦一背景图(此功能试用中，可能由于缩放，格式等问题出现错位)/v2</br>
+</font>
+
+<input type="button" onclick="javascript:location.reload();" value="刷新当前页面">
+<input type="button" onclick="debug() " value="Debug">
+
+</body>
+</body>
+</html>
